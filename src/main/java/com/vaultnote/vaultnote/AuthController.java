@@ -14,6 +14,9 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @PostMapping("/auth/signup")
@@ -35,6 +38,6 @@ public class AuthController {
             return "Wrong password";
         }
 
-        return "Login successful";
+        return jwtUtil.generateToken(foundUser.get().getUsername());
     }
 }
